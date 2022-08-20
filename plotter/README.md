@@ -1,20 +1,46 @@
+# Vertical Pen Plotter
+Micropython implementation for a vertical pen plotter using a microcontroller such as a Raspberry Pi Pico W
+
+## Setup
+
+### Config
+Create a `config.py` file in the `src` directory.
+
 ```py
-import plotter
+WIFI_NAME = ''
+WIFI_PASSWORD = ''
 
-leftStepper = plotter.Stepper(16, 14)
-rightStepper = plotter.Stepper(12, 13)
-p = plotter.Plotter(leftStepper, rightStepper)
+# in cm
+SPOOL_DIAMETER = 10
+BOARD_WIDTH = 100
+
+# in degrees
+STEP_SIZE = 1.8
+STEP_DELAY_MS = 5
+
+LEFT_STEP_PIN = 16
+LEFT_DIR_PIN = 14 
+
+RIGHT_STEP_PIN = 12
+RIGHT_DIR_PIN = 13
 ```
 
-# 31.4159 / 360 * 1.8 = .157079 cm
+### IDE Setup
+It's helpful to configure your IDE to sync the `src` files to the microcontroller on save. Here is how to set this up on VSCode. 
 
-ESP_DA0354
-wemo
+1) Install `Run on Save` extension.
+2) Add configuration to workspace `.vscode/settings.json`.
 
-```sh
-rshell -p /dev/tty.usbserial-1410
-rsync plotter/src /pyboard
-```
+```json
+"emeraldwalk.runonsave": {
+    "commands": [
+        {
+            "match": "plotter\\/src.*\\.py$",
+            "cmd": "rshell rsync ~/src/knowledge_base/plotter/src /pyboard"
+        },
+    ],
+  }
+``` 
 
 ## Resources
 https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/basics.html
