@@ -46,3 +46,4 @@ It's helpful to configure your IDE to sync the `src` files to the microcontrolle
 https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/basics.html
 https://github.com/dhylands/rshell
 https://www.instructables.com/BLACKBOARD-V-PLOTTER/
+https://stackoverflow.com/questions/35977916/generate-sec-websocket-accept-from-sec-websocket-key
