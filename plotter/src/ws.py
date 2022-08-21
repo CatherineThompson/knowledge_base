@@ -1,5 +1,6 @@
 import binascii
 import hashlib
+import websocket
 try:
     import usocket as socket
 except ImportError:
@@ -21,7 +22,7 @@ def getAcceptKey(req):
             return binascii.b2a_base64(h.digest()).decode().replace("\n", "")
 
 
-def StartServer():
+def StartServer(cmdCallback):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('', 80))
     s.listen(1)
@@ -38,9 +39,15 @@ def StartServer():
         conn.send('Sec-WebSocket-Accept: %s\r\n' % acceptKey)
         conn.send('\r\n')
 
-        # response = 'OK'
-        # conn.send('HTTP/1.1 200 OK\n')
-        # conn.send('Content-Type: text/html\n')
-        # conn.send('Connection: close\n\n')
-        # conn.sendall(response)
-        # conn.close()
+        ws = websocket.websocket(conn, True)
+        while True:
+            msg = ws.read(3)
+            msgStr = msg.decode()
+
+            if msgStr == 'end':
+                break
+
+            cmdCallback(msgStr)
+
+        print("closing conn")
+        conn.close()

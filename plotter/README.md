@@ -36,7 +36,7 @@ It's helpful to configure your IDE to sync the `src` files to the microcontrolle
     "commands": [
         {
             "match": "plotter\\/src.*\\.py$",
-            "cmd": "rshell rsync ~/src/knowledge_base/plotter/src /pyboard"
+            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/src /pyboard"
         },
     ],
   }
@@ -47,3 +47,4 @@ https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/basics.html
 https://github.com/dhylands/rshell
 https://www.instructables.com/BLACKBOARD-V-PLOTTER/
 https://stackoverflow.com/questions/35977916/generate-sec-websocket-accept-from-sec-websocket-key
+https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
