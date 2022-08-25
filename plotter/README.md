@@ -48,3 +48,9 @@ https://github.com/dhylands/rshell
 https://www.instructables.com/BLACKBOARD-V-PLOTTER/
 https://stackoverflow.com/questions/35977916/generate-sec-websocket-accept-from-sec-websocket-key
 https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
+
+### PIO State Machines
+https://forums.raspberrypi.com/viewtopic.php?t=319959
+https://vanhunteradams.com/Pico/Steppers/Lorenz.html
+
+https://websockets.readthedocs.io/en/stable/reference/client.html
