@@ -14,7 +14,7 @@ class Plotter:
     # how much the length of the string increase/decreases per step
     self.stepDistance = config.SPOOL_DIAMETER * math.pi / 360 * config.STEP_SIZE # 0.157
   
-  def move(self, x, y):
+  async def move(self, x, y):
     if x > 100 or x < 0 or y > 100 or y < 0:
       return
 
@@ -28,28 +28,27 @@ class Plotter:
     rightDir = 'U' if c2_prev - c2 > 0 else 'D'
     rightSteps = math.floor(abs(c2_prev - c2) * self.projectionRatio / self.stepDistance)
 
-    stepsToTake = leftSteps + rightSteps
+    print(leftSteps)
+    print(rightSteps)
+
     ratio = leftSteps/rightSteps
-    while stepsToTake > 0:
+    while leftSteps + rightSteps > 0:
         r = leftSteps/rightSteps
         if r >= ratio:
-            self.send('L %s' % leftDir)
+          await self.send('L %s' % leftDir)
+          leftSteps -= 1
         else:
-            self.send('R %s' % rightDir)
-        
-        stepsToTake -= 1
+          await self.send('R %s' % rightDir)
+          rightSteps -= 1
 
     # TODO: change to actual position (floor)
     self.x = x
     self.y = y
 
-  def rectTest(self):
-      self.move(25, 25)
-      self.move(75, 25)
-      self.move(75, 75)
-      self.move(25, 75)
-      self.move(25, 25)
-      self.move(50, 50)
-      # self.move(20, 20)
-      # self.move(10, 20)
-      # self.move(20, 15)
+  async def rectTest(self):
+      await self.move(25, 25)
+      await self.move(75, 25)
+      await self.move(75, 75)
+      await self.move(25, 75)
+      await self.move(25, 25)
+      await self.move(50, 50)
