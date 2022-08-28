@@ -54,3 +54,9 @@ https://forums.raspberrypi.com/viewtopic.php?t=319959
 https://vanhunteradams.com/Pico/Steppers/Lorenz.html
 
 https://websockets.readthedocs.io/en/stable/reference/client.html
+https://docs.python.org/3/howto/sockets.html
+https://github.com/peterhinch/micropython-async/blob/master/v3/docs/TUTORIAL.md#76-socket-programming
+https://github.com/peterhinch/micropython-async/blob/master/v3/as_drivers/client_server/userver.py
+
+ctrl-d - soft reset
+
