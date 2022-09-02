@@ -36,7 +36,7 @@ It's helpful to configure your IDE to sync the `src` files to the microcontrolle
     "commands": [
         {
             "match": "plotter\\/src.*\\.py$",
-            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/src /pyboard"
+            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/server /pyboard"
         },
     ],
   }
