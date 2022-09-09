@@ -11,7 +11,7 @@ def decode_cmd(cmd):
     left = int(c[0])
     right = int(c[1])
     length = int(c[2])
-    return  left, right, length
+    return left, right, length
 
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
@@ -38,8 +38,8 @@ async def main():
     sta.connect(config.WIFI_NAME, config.WIFI_PASSWORD)
     print(sta.ifconfig())
 
-    leftStepper = stepper.Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.STEP_DELAY_MS, )
-    rightStepper = stepper.Stepper(config.RIGHT_STEP_PIN, config.RIGHT_DIR_PIN, config.STEP_DELAY_MS)
+    leftStepper = stepper.Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.LEFT_ENABLE_PIN)
+    rightStepper = stepper.Stepper(config.RIGHT_STEP_PIN, config.RIGHT_DIR_PIN, config.RIGHT_ENABLE_PIN)
 
     q = Queue()
 

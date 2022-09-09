@@ -13,42 +13,29 @@ class Plotter:
 
     # how much the length of the string increase/decreases per step
     self.stepDistance = config.SPOOL_DIAMETER * math.pi / 360 * config.STEP_SIZE # 0.157
+    self.max_freq = int(config.MAX_FREQ / config.STEP_SIZE)
   
   def move(self, x, y):
-    if x > 100 or x < 0 or y > 100 or y < 0:
-      return
-
     c1_prev = calc.pyth(self.x, self.y, None)
     c1 = calc.pyth(x, y, None)
-    leftDir = 'U' if c1_prev - c1 > 0 else 'D'
-    leftSteps = math.floor(abs(c1_prev - c1) * self.projectionRatio / self.stepDistance)
+    left_dir = 1 if c1_prev - c1 > 0 else -1
+    left_steps = math.floor(abs(c1_prev - c1) * self.projectionRatio / self.stepDistance)
 
     c2_prev = calc.pyth(100 - self.x, self.y, None)
     c2 = calc.pyth(100 - x, y, None)
-    rightDir = 'U' if c2_prev - c2 > 0 else 'D'
-    rightSteps = math.floor(abs(c2_prev - c2) * self.projectionRatio / self.stepDistance)
+    right_dir = 1 if c2_prev - c2 > 0 else -1
+    right_steps = math.floor(abs(c2_prev - c2) * self.projectionRatio / self.stepDistance)
 
-    ratio = leftSteps/rightSteps if rightSteps else -1
-    while leftSteps + rightSteps > 0:
-      motor = 'L'
+    print(x, y)
+    print(left_steps, right_steps)
 
-      if leftSteps == 0 or rightSteps == 0:
-        motor = 'L' if rightSteps == 0 else 'R'
-      else:
-        r = leftSteps/rightSteps
-        motor = 'L' if r > ratio else 'R'
+    d = left_steps if left_steps > right_steps else right_steps
+    t = int(d / self.max_freq * 1000)
+    left_freq = int(left_steps / d * self.max_freq) * left_dir
+    right_freq = int(right_steps / d * self.max_freq) * right_dir
 
-      dir = rightDir if motor == 'R' else leftDir
-      cmd = motor + dir
-      self.send(cmd)
-      
-      if motor == 'L':
-        leftSteps -= 1
-      else:
-        rightSteps -= 1
+    self.send(f'{left_freq},{right_freq},{t}|')
 
-
-    # TODO: change to actual position (floor)
     self.x = x
     self.y = y
 
