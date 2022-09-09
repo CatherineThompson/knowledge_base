@@ -3,7 +3,7 @@ from machine import Pin, PWM
 class Stepper:
   def __init__(self, step_pin, dir_pin, enable_pin):
     self.pwm = PWM(Pin(step_pin))
-    self.dir_pin = Pin(dir_pin)
+    self.dir_pin = Pin(dir_pin, Pin.OUT)
     # self.enable_pin = Pin(enable_pin)
 
   def move(self, dir, freq):

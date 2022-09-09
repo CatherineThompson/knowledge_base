@@ -1,11 +1,5 @@
 import uasyncio as asyncio
 
-
-def decode_message(data):
-    msg = data.decode()
-    m = msg.split('|')
-    return m
-
 class Server:
 
     def __init__(self, q, host='0.0.0.0', port=8080, backlog=1, timeout=20):
@@ -33,10 +27,11 @@ class Server:
                     data = b''
                 if data == b'':
                     raise OSError
-                msg = decode_message(data)
-                for cmd in msg:
-                    if cmd != '':
-                        self.q.put_nowait(cmd)
+
+                cmd = data.decode()
+                print(repr(cmd))
+                self.q.put_nowait(cmd)
+
         except OSError:
             pass
         print('Client {} disconnect.'.format(self.cid))
