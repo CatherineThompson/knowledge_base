@@ -36,7 +36,7 @@ It's helpful to configure your IDE to sync the `src` files to the microcontrolle
     "commands": [
         {
             "match": "plotter\\/src.*\\.py$",
-            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/src /pyboard"
+            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/server /pyboard"
         },
     ],
   }
@@ -53,9 +53,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 https://forums.raspberrypi.com/viewtopic.php?t=319959
 https://vanhunteradams.com/Pico/Steppers/Lorenz.html
 
-https://websockets.readthedocs.io/en/stable/reference/client.html
-
 ### GCode
 https://ncviewer.com/
 https://inkscape.org/~arpruss/%E2%98%85gcodeplot
 https://github.com/PadLex/SvgToGcode
+
+https://docs.python.org/3/howto/sockets.html
+https://github.com/peterhinch/micropython-async/blob/master/v3/docs/TUTORIAL.md#76-socket-programming
+https://github.com/peterhinch/micropython-async/blob/master/v3/as_drivers/client_server/userver.py
+
+ctrl-d - soft reset

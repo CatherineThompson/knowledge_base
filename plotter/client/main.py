@@ -1,13 +1,17 @@
-import asyncio
-import websockets
 import plotter
+import config
+import socket
 
-async def main():
-  async with websockets.connect("ws://localhost:8765") as websocket:
-    async def send(msg):
-      await websocket.send(msg)
+def main():
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((config.SERVER_HOST, config.SERVER_PORT))
+
+    def send(msg):
+      s.send(msg.encode())
 
     p = plotter.Plotter(send)
-    await p.rectTest()
+    p.rectTest()
 
-asyncio.run(main())
+  print('done')
+
+main()
