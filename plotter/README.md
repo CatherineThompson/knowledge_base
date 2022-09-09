@@ -31,6 +31,12 @@ RIGHT_DIR_PIN = 18
 LEFT_ENABLE_PIN = 19
 LEFT_STEP_PIN = 20
 LEFT_DIR_PIN = 21
+
+# in Hz - cycles/steps per second
+MAX_FREQ = 500
+
+# 1 | 1/2 | 1/4 | 1/8 | 1/16
+STEP_SIZE = 1/16
 ```
 
 ### IDE Setup

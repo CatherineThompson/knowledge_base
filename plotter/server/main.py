@@ -4,7 +4,8 @@ import stepper
 # import uasyncio as asyncio
 # from queue import Queue
 # from server import Server
-import utime
+import time
+from machine import PWM, Pin
 
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
@@ -14,35 +15,60 @@ async def processCmdQueue(q, leftStepper, rightStepper):
         d = m.UP if dir == 'U' else m.DOWN
         m.step(d)
 
-def pio_demo():
-    leftStepper = stepper.Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.LEFT_ENABLE_PIN, 0)
-    rightStepper = stepper.Stepper(config.RIGHT_STEP_PIN, config.RIGHT_DIR_PIN, config.RIGHT_ENABLE_PIN, 5)
+def stepper_demo():
+    leftStepper = stepper.Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.LEFT_ENABLE_PIN, config.MAX_FREQ, config.STEP_SIZE)
+    rightStepper = stepper.Stepper(config.RIGHT_STEP_PIN, config.RIGHT_DIR_PIN, config.RIGHT_ENABLE_PIN, config.MAX_FREQ, config.STEP_SIZE)
 
-    leftStepper.move(100000, 0)
-    rightStepper.move(100000, 0)
+    leftStepper.move()
+    rightStepper.move()
 
-    utime.sleep(10)
-
-    leftStepper.move(50000, 0)
-    rightStepper.move(50000, 0)
-
-    utime.sleep(10)
+    time.sleep(5)
 
     leftStepper.stop()
     rightStepper.stop()
 
-    utime.sleep(2)
+    time.sleep(5)
 
-    leftStepper.move(50000, 1)
-    rightStepper.move(50000, 1)
+    leftStepper.move()
+    rightStepper.move()
 
-    utime.sleep(10)
+    time.sleep(5)
 
     leftStepper.stop()
     rightStepper.stop()
 
     
-pio_demo()
+stepper_demo()
+
+def pwm_demo():
+    pwm1 = PWM(Pin(config.LEFT_STEP_PIN))
+    pwm2 = PWM(Pin(config.RIGHT_STEP_PIN))
+    # 50%
+    pwm1.duty_u16(32768)
+    pwm2.duty_u16(32768)
+
+    pwm1.freq(int(config.MAX_FREQ / config.STEP_SIZE))
+    pwm2.freq(int(config.MAX_FREQ / config.STEP_SIZE))
+
+    time.sleep(5)
+
+    pwm1.deinit()
+    pwm2.deinit()
+
+    time.sleep(5)
+
+    pwm1.duty_u16(32768)
+    pwm2.duty_u16(32768)
+
+    pwm1.freq(int(config.MAX_FREQ / config.STEP_SIZE))
+    pwm2.freq(int(config.MAX_FREQ / config.STEP_SIZE))
+    
+    time.sleep(5)
+
+    pwm1.deinit()
+    pwm2.deinit()
+
+# pwm_demo()
 
 # async def main():
     # connect to wifi access point
