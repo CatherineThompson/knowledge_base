@@ -10,23 +10,23 @@ def decode_cmd(cmd):
     c = cmd.split(',')
     left = int(c[0])
     right = int(c[1])
-    length = int(c[2])
-    return left, right, length
+    dur = int(c[2])
+    return left, right, dur 
 
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
         raw_cmd = await q.get()
-        left, right, length = decode_cmd(raw_cmd)
+        left_freq, right_freq, dur_ms = decode_cmd(raw_cmd)
         left_dir = 1
-        if left > 0:
+        if left_freq > 0:
             left_dir = 0
         right_dir = 1
-        if right > 0:
+        if right_freq > 0:
             right_dir = 0
-        leftStepper.move(left_dir, left)
-        rightStepper.move(right_dir, right)
+        leftStepper.move(left_dir, abs(left_freq))
+        rightStepper.move(right_dir, abs(right_freq))
 
-        time.sleep(length)
+        time.sleep_ms(dur_ms)
 
         leftStepper.stop()
         rightStepper.stop()

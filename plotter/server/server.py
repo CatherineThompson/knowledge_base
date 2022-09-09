@@ -35,7 +35,8 @@ class Server:
                     raise OSError
                 msg = decode_message(data)
                 for cmd in msg:
-                    self.q.put_nowait(cmd)
+                    if cmd != '':
+                        self.q.put_nowait(cmd)
         except OSError:
             pass
         print('Client {} disconnect.'.format(self.cid))
