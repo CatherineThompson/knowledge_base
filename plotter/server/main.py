@@ -7,29 +7,32 @@ from server import Server
 import time
 
 def decode_cmd(cmd):
-    c = cmd.split(',')
-    left = int(c[0])
-    right = int(c[1])
-    dur = int(c[2])
-    return left, right, dur 
+    l, r, d = cmd.split(',')
+    left_freq = abs(int(l))
+    right_freq = abs(int(r))
+    dur_ms = int(d)
+    left_dir = 1
+    if int(l) > 0:
+        left_dir = 0
+    right_dir = 1
+    if int(r) > 0:
+        right_dir = 0
+    return left_freq, left_dir, right_freq, right_dir, dur_ms
 
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
         raw_cmd = await q.get()
-        left_freq, right_freq, dur_ms = decode_cmd(raw_cmd)
-        left_dir = 1
-        if left_freq > 0:
-            left_dir = 0
-        right_dir = 1
-        if right_freq > 0:
-            right_dir = 0
-        leftStepper.move(left_dir, abs(left_freq))
-        rightStepper.move(right_dir, abs(right_freq))
+        left_freq, left_dir, right_freq, right_dir, dur_ms = decode_cmd(raw_cmd)
+
+        leftStepper.move(left_dir, left_freq)
+        rightStepper.move(right_dir, right_freq)
 
         time.sleep_ms(dur_ms)
 
         leftStepper.stop()
         rightStepper.stop()
+
+        time.sleep_ms(500)
 
 async def main():
     # connect to wifi access point
