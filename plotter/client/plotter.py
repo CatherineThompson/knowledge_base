@@ -26,15 +26,15 @@ class Plotter:
     right_dir = 1 if c2_prev - c2 > 0 else -1
     right_steps = math.floor(abs(c2_prev - c2) * self.projectionRatio / self.stepDistance)
 
-    print(x, y)
-    print(left_steps, right_steps)
-
     d = left_steps if left_steps > right_steps else right_steps
     t = int(d / self.max_freq * 1000)
     left_freq = int(left_steps / d * self.max_freq) * left_dir
     right_freq = int(right_steps / d * self.max_freq) * right_dir
 
-    self.send(f'{left_freq},{right_freq},{t}|')
+    msg = f'{left_freq},{right_freq},{t}|'
+    print(msg)
+
+    self.send(msg)
 
     self.x = x
     self.y = y
