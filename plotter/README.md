@@ -4,25 +4,33 @@ Micropython implementation for a vertical pen plotter using a microcontroller su
 ## Setup
 
 ### Config
-Create a `config.py` file in the `src` directory.
+Create a `config.py` file in the `client` and `server` directories. 
 
+<code>client/config.py</code>
 ```py
-WIFI_NAME = ''
-WIFI_PASSWORD = ''
-
 # in cm
 SPOOL_DIAMETER = 10
 BOARD_WIDTH = 100
 
 # in degrees
 STEP_SIZE = 1.8
-STEP_DELAY_MS = 5
 
-LEFT_STEP_PIN = 16
-LEFT_DIR_PIN = 14 
+SERVER_HOST = "PYBD.localdomain"
+SERVER_PORT = 8080
+```
 
-RIGHT_STEP_PIN = 12
-RIGHT_DIR_PIN = 13
+<code>server/config.py</code>
+```py
+WIFI_NAME = ''
+WIFI_PASSWORD = ''
+
+RIGHT_ENABLE_PIN = 16
+RIGHT_STEP_PIN = 17
+RIGHT_DIR_PIN = 18
+
+LEFT_ENABLE_PIN = 19
+LEFT_STEP_PIN = 20
+LEFT_DIR_PIN = 21
 ```
 
 ### IDE Setup
@@ -32,14 +40,16 @@ It's helpful to configure your IDE to sync the `src` files to the microcontrolle
 2) Add configuration to workspace `.vscode/settings.json`.
 
 ```json
-"emeraldwalk.runonsave": {
-    "commands": [
-        {
-            "match": "plotter\\/src.*\\.py$",
-            "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/server /pyboard"
-        },
-    ],
+{
+  "emeraldwalk.runonsave": {
+      "commands": [
+          {
+              "match": "plotter\\/server.*\\.py$",
+              "cmd": "rshell rsync -m ~/src/knowledge_base/plotter/server /pyboard"
+          },
+      ],
   }
+}
 ``` 
 
 ## Resources
@@ -61,5 +71,3 @@ https://github.com/PadLex/SvgToGcode
 https://docs.python.org/3/howto/sockets.html
 https://github.com/peterhinch/micropython-async/blob/master/v3/docs/TUTORIAL.md#76-socket-programming
 https://github.com/peterhinch/micropython-async/blob/master/v3/as_drivers/client_server/userver.py
-
-ctrl-d - soft reset
