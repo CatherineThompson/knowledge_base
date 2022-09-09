@@ -7,13 +7,31 @@ import stepper
 import time
 from machine import PWM, Pin
 
+def decode_cmd(cmd):
+    c = cmd.split(',')
+    left = int(c[0])
+    right = int(c[1])
+    length = int(c[2])
+    return  left, right, length
+    
+
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
-        motor = await q.get()
-        dir = await q.get()
-        m = leftStepper if motor == 'L' else rightStepper
-        d = m.UP if dir == 'U' else m.DOWN
-        m.step(d)
+        raw_cmd = await q.get()
+        left, right, length = decode_cmd(raw_cmd)
+        left_dir = 1
+        if left > 0:
+            left_dir = 0
+        right_dir = 1
+        if right > 0:
+            right_dir = 0
+        leftStepper.move(left_dir, left)
+        rightStepper.move(right_dir, right)
+
+        time.sleep(length)
+
+        leftStepper.stop()
+        rightStepper.stop()
 
 def stepper_demo():
     leftStepper = stepper.Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.LEFT_ENABLE_PIN, config.MAX_FREQ, config.STEP_SIZE)
