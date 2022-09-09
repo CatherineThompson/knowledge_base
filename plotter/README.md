@@ -54,3 +54,8 @@ https://forums.raspberrypi.com/viewtopic.php?t=319959
 https://vanhunteradams.com/Pico/Steppers/Lorenz.html
 
 https://websockets.readthedocs.io/en/stable/reference/client.html
+
+### GCode
+https://ncviewer.com/
+https://inkscape.org/~arpruss/%E2%98%85gcodeplot
+https://github.com/PadLex/SvgToGcode
