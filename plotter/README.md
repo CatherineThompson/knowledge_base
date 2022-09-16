@@ -4,40 +4,7 @@ Micropython implementation for a vertical pen plotter using a microcontroller su
 ## Setup
 
 ### Config
-Create a `config.py` file in the `client` and `server` directories. 
-
-<code>client/config.py</code>
-```py
-# in cm
-SPOOL_DIAMETER = 10
-BOARD_WIDTH = 100
-
-# in degrees
-STEP_SIZE = 1.8
-
-# in Hz - cycles/steps per second
-MAX_FREQ = 500
-
-# 1 | 1/2 | 1/4 | 1/8 | 1/16
-STEP_SIZE = 1/16
-
-SERVER_HOST = "PYBD.localdomain"
-SERVER_PORT = 8080
-```
-
-<code>server/config.py</code>
-```py
-WIFI_NAME = ''
-WIFI_PASSWORD = ''
-
-RIGHT_ENABLE_PIN = 16
-RIGHT_STEP_PIN = 17
-RIGHT_DIR_PIN = 18
-
-LEFT_ENABLE_PIN = 19
-LEFT_STEP_PIN = 20
-LEFT_DIR_PIN = 21
-```
+Create a `config.py` file in the `client` and `server` directories, using the `config.example.py` file a template.
 
 ### IDE Setup
 It's helpful to configure your IDE to sync the `src` files to the microcontroller on save. Here is how to set this up on VSCode. 
@@ -68,6 +35,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 ### PIO State Machines
 https://forums.raspberrypi.com/viewtopic.php?t=319959
 https://vanhunteradams.com/Pico/Steppers/Lorenz.html
+https://github.com/tinkertechtrove/pico-pi-playing
 
 ### GCode
 https://ncviewer.com/
