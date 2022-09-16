@@ -77,3 +77,6 @@ https://github.com/PadLex/SvgToGcode
 https://docs.python.org/3/howto/sockets.html
 https://github.com/peterhinch/micropython-async/blob/master/v3/docs/TUTORIAL.md#76-socket-programming
 https://github.com/peterhinch/micropython-async/blob/master/v3/as_drivers/client_server/userver.py
+
+# Stepper Motor
+https://www.ti.com/lit/an/slyt482/slyt482.pdf?ts=1662772228247&ref_url=https%253A%252F%252Fwww.google.com%252F#:~:text=To%20accelerate%20a%20stepper%20from,tation%20uses%20only%20two%20timers.
