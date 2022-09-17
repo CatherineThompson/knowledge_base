@@ -30,11 +30,9 @@ def accel_pwm_demo():
     pwm.deinit()
 
 def accel_demo():
-  # stepper = Stepper(config.LEFT_STEP_PIN, config.LEFT_DIR_PIN, config.LEFT_ENABLE_PIN, config.STEP_SIZE)
-  stepper = Stepper(config.RIGHT_STEP_PIN, config.RIGHT_DIR_PIN, config.RIGHT_ENABLE_PIN, config.STEP_SIZE)
-  
-  stepper.move(1000)
-  # asyncio.create_task(stepper2.move(1000))
+  stepper = Stepper()
+  for i in range(20):
+    stepper.move((i+1)*(i+1)*50, 1, 4)
 
 
 @rp2.asm_pio(set_init=rp2.PIO.OUT_LOW)
@@ -98,16 +96,25 @@ def pio_demo():
 
   motor.active(0)
     
-# count = 0
-# def timer_demo():
-#   def tick(t):
-#     global count
-#     # is mod too expensive??
-#     if count%2500 == 0: 
-#       print('tick')
+count = 0
+def timer_demo():
+  def tick(t):
+    global count
+    if count%2500 == 0: 
+      print('tick')
 
-#     count+=1
+    count+=1
       
 
-#   tim = Timer()
-#   tim.init(freq=5000, mode=Timer.PERIODIC, callback=tick)
+  tim = Timer()
+  tim.init(freq=5000, mode=Timer.PERIODIC, callback=tick)
+
+def delay_demo():
+    pin = Pin(config.LEFT_STEP_PIN, Pin.OUT)
+    for i in range(50000):
+        pin.high()
+        time.sleep_us(100)
+        pin.low()
+        time.sleep_us(100)
+
+    time.sleep(2)

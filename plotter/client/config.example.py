@@ -4,9 +4,6 @@ BOARD_WIDTH = 100
 # in degrees
 STEP_SIZE = 1.8
 
-# in Hz - cycles/steps per second
-MAX_FREQ = 500
-
 # 1 | 1/2 | 1/4 | 1/8 | 1/16
 STEP_SIZE = 1/16
 

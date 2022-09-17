@@ -13,5 +13,5 @@ LEFT_DIR_PIN = 21
 # in Hz - cycles/steps per second
 MAX_FREQ = 500
 
-# 1 | 1/2 | 1/4 | 1/8 | 1/16
-STEP_SIZE = 1
+# 1 | 2 | 4 | 8 | 16
+STEP_SIZE = 16
