@@ -23,10 +23,10 @@ class StepperPWM:
 
 
 class Stepper:
-    delay_ratio = 200000
-    max_steps_per_second = 700
-    min_steps_per_second = 180
-    acceleration = 20
+    delay_ratio = 100000
+    max_steps_per_second = 400
+    min_steps_per_second = 50
+    acceleration = 10
 
     # TODO: control both motors with the same loop??
     def __init__(self, step_pin, dir_pin, enable_pin, step_size):
@@ -69,7 +69,7 @@ class Stepper:
                 self.step.high()
                 time.sleep_us(delay)
                 self.step.low()
-                time.sleep_us(delay)
+                time.sleep_us(math.floor(delay/19))
                 step += 1
             i += 1
             await asyncio.sleep(0)

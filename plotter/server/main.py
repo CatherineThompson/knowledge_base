@@ -6,6 +6,8 @@ from queue import Queue
 from server import Server
 import time
 
+RATIO_THRESHOLD = 30
+
 
 def connect():
     #Connect to WLAN
@@ -31,9 +33,23 @@ def decode_cmd(cmd):
     return left_steps, left_dir, right_steps, right_dir
 
 
-def get_ratios(left_ratio, right_ratio):
-    # TODO: actually calculate ratio
-    return 1, 1
+def get_ratios(left_steps, right_steps):
+    original_left_steps = left_steps
+    original_right_steps = right_steps
+    left_ratio = 1
+    right_ratio = 1
+    diff = abs(left_steps - right_steps)
+    i = 0
+    while diff > RATIO_THRESHOLD * (i**1.05):
+        if left_steps < right_steps:
+            left_ratio += 1
+            left_steps = left_ratio * original_left_steps
+        else:
+            right_ratio += 1
+            right_steps = right_ratio * original_right_steps
+        diff = abs(left_steps - right_steps)
+        i += 1
+    return left_ratio, right_ratio
 
 
 async def processCmdQueue(q, leftStepper, rightStepper):
@@ -45,6 +61,7 @@ async def processCmdQueue(q, leftStepper, rightStepper):
         rightStepper.dir(right_dir)
 
         left_ratio, right_ratio = get_ratios(left_steps, right_steps)
+        print(f"Ratios: L({left_ratio}), R({right_ratio})")
 
         l = asyncio.create_task(leftStepper.move(left_steps, left_ratio))
         r = asyncio.create_task(rightStepper.move(right_steps, right_ratio))
