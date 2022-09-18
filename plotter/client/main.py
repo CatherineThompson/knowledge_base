@@ -9,8 +9,9 @@ def main():
     def send(msg):
       s.send(msg.encode())
 
-    p = plotter.Plotter(send)
-    p.rectTest()
+    s.send("-1000,-1000".encode("utf-8"))
+    # p = plotter.Plotter(send)
+    # p.rectTest()
 
   print('done')
 

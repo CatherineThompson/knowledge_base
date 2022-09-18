@@ -1,56 +1,78 @@
+import uasyncio as asyncio
 from machine import Pin, PWM
 import time
 import math
 
+
 class StepperPWM:
-  def __init__(self, step_pin, dir_pin, enable_pin):
-    self.pwm = PWM(Pin(step_pin))
-    self.dir_pin = Pin(dir_pin, Pin.OUT)
-    # self.enable_pin = Pin(enable_pin)
 
-  def move(self, dir, freq):
-    self.dir_pin(dir)    
-    # self.enable_pin.low()
-    self.pwm.duty_u16(32768)
-    self.pwm.freq(freq)
+    def __init__(self, step_pin, dir_pin, enable_pin):
+        self.pwm = PWM(Pin(step_pin))
+        self.dir_pin = Pin(dir_pin, Pin.OUT)
+        # self.enable_pin = Pin(enable_pin)
 
-  def stop(self):
-    self.pwm.deinit()
-    # self.enable_pin.high()
+    def move(self, dir, freq):
+        self.dir_pin(dir)
+        # self.enable_pin.low()
+        self.pwm.duty_u16(32768)
+        self.pwm.freq(freq)
+
+    def stop(self):
+        self.pwm.deinit()
+        # self.enable_pin.high()
+
 
 class Stepper:
-  # TODO: control both motors with the same loop??
-  def __init__(self, step_pin, dir_pin, enable_pin, step_size):
-    self.step = Pin(step_pin, Pin.OUT)
-    self.dir = Pin(dir_pin, Pin.OUT)
-    # self.en = Pin(enable_pin, Pin.OUT)
-    # self.en.high()
-    max_freq = step_size * 600
-    min_freq = step_size * 200 
-    self.max_delay = Stepper.speed_to_delay(max_freq)
-    self.min_delay = Stepper.speed_to_delay(min_freq)
-    # change in ramp up/ramp down delay
-    self.delay_acc = 20
+    delay_ratio = 200000
+    max_steps_per_second = 700
+    min_steps_per_second = 180
+    acceleration = 20
 
-    print(self.max_delay, self.min_delay)
+    # TODO: control both motors with the same loop??
+    def __init__(self, step_pin, dir_pin, enable_pin, step_size):
+        self.step = Pin(step_pin, Pin.OUT)
+        self.dir = Pin(dir_pin, Pin.OUT)
+        # self.en = Pin(enable_pin, Pin.OUT)
+        # self.en.high()
+        max_freq = step_size * Stepper.max_steps_per_second
+        min_freq = step_size * Stepper.min_steps_per_second
+        self.max_delay = Stepper.speed_to_delay(max_freq)
+        self.min_delay = Stepper.speed_to_delay(min_freq)
 
-  def speed_to_delay(freq):
-    return 500000 / freq
+        # print(self.max_delay, self.min_delay)
 
-  async def move(self, steps):
-    # self.en.low()
+    def dir(self, direction):
+        if direction == 0:
+            self.dir.low()
+        elif direction == 1:
+            self.dir.high()
+        else:
+            raise Exception("Only 1 or 0 accepted")
+    def speed_to_delay(freq):
+        return Stepper.delay_ratio / freq
 
-    steps_to_stop = int((self.min_delay - self.max_delay) / self.delay_acc)
-    for i in range(steps):
-      steps_left = steps - i
-      if steps_to_stop >= steps_left:
-        delay = math.floor(min(self.max_delay + (steps_to_stop - steps_left) * self.delay_acc, self.min_delay))
-      else:
-        delay = math.floor(max(self.min_delay - i * self.delay_acc, self.max_delay))
+    async def move(self, steps, ratio):
+        # print(f"moving {steps} steps")
+        # self.en.low()
 
-      self.step.high()
-      time.sleep_us(delay)
-      self.step.low()
-      time.sleep_us(delay)
+        steps_to_stop = int((self.min_delay - self.max_delay) / self.acceleration)
+        step = 0
+        i = 0
+        while step < steps:
+            if i % ratio == 0:
+                steps_left = steps - step
+                if steps_to_stop >= steps_left:
+                    delay = math.floor(min(self.max_delay + (steps_to_stop - steps_left) * self.acceleration, self.min_delay))
+                else:
+                    delay = math.floor(max(self.min_delay - step * self.acceleration, self.max_delay))
 
-    # self.en.high()
+                self.step.high()
+                time.sleep_us(delay)
+                self.step.low()
+                time.sleep_us(delay)
+                step += 1
+            i += 1
+            await asyncio.sleep(0)
+
+
+        # self.en.high()
