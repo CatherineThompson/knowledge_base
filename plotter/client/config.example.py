@@ -1,3 +1,4 @@
+# in cm
 SPOOL_DIAMETER = 10
 BOARD_WIDTH = 100
 
