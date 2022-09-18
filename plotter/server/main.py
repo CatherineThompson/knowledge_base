@@ -8,21 +8,21 @@ from server import Server
 def decode_cmd(cmd):
     s, l, r = cmd.split(',')
     steps = int(s)
-    l_prd = int(l)
-    r_prd = int(r)
+    l_rat = float(l)
+    r_rat = float(r)
     l_dir = 1
-    if l_prd > 0:
+    if l_rat > 0:
         l_dir = 0
     r_dir = 1
-    if r_prd > 0:
+    if r_rat > 0:
         r_dir = 0
-    return steps, l_dir, abs(l_prd), r_dir, abs(r_prd)
+    return steps, l_dir, abs(l_rat), r_dir, abs(r_rat)
 
 async def processCmdQueue(q, stepper):
     while True:
         raw_cmd = await q.get()
-        steps, l_dir, l_prd, r_dir, r_prd = decode_cmd(raw_cmd)
-        stepper.move(steps, l_dir, l_prd, r_dir, r_prd)
+        steps, l_dir, l_rat, r_dir, r_rat = decode_cmd(raw_cmd)
+        stepper.move(steps, l_dir, l_rat, r_dir, r_rat)
 
 
 async def main():

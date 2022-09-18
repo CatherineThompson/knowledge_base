@@ -12,7 +12,7 @@ class Plotter:
     self.y = 50
 
     # how much the length of the string increase/decreases per step
-    self.stepDistance = config.SPOOL_DIAMETER * math.pi / 360 * config.STEP_SIZE # 0.157
+    self.stepDistance = config.SPOOL_DIAMETER * math.pi / 360 * 1.8 * config.STEP_SIZE # 0.157 for full step
   
   def move(self, x, y):
     c1_prev = calc.pyth(self.x, self.y, None)
@@ -28,10 +28,10 @@ class Plotter:
     print(left_steps, right_steps)
 
     steps = left_steps if left_steps > right_steps else right_steps
-    left_prd = int(steps / left_steps) * left_dir
-    right_prd = int(steps / right_steps) * right_dir
+    left_rat = round(steps / left_steps, 6) * left_dir
+    right_rat = round(steps / right_steps, 6) * right_dir
 
-    msg = f'{steps},{left_prd},{right_prd}\n'
+    msg = f'{steps},{left_rat},{right_rat}\n'
     print(msg)
 
     self.send(msg)

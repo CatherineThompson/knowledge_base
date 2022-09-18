@@ -3,32 +3,13 @@ import time
 import math
 import config
 
-class StepperPWM:
-  def __init__(self, step_pin, dir_pin, enable_pin):
-    self.pwm = PWM(Pin(step_pin))
-    self.dir_pin = Pin(dir_pin, Pin.OUT)
-    # self.enable_pin = Pin(enable_pin)
-
-  def move(self, dir, freq):
-    self.dir_pin(dir)    
-    # self.enable_pin.low()
-    self.pwm.duty_u16(32768)
-    self.pwm.freq(freq)
-
-  def stop(self):
-    self.pwm.deinit()
-    # self.enable_pin.high()
-
 class Stepper:
-  # TODO: control both motors with the same loop??
   def __init__(self):
     self.step1 = Pin(config.LEFT_STEP_PIN, Pin.OUT)
     self.step2 = Pin(config.RIGHT_STEP_PIN, Pin.OUT)
     self.dir1 = Pin(config.LEFT_DIR_PIN, Pin.OUT)
     self.dir2 = Pin(config.RIGHT_DIR_PIN, Pin.OUT)
-    # self.en = Pin(enable_pin, Pin.OUT)
-    # self.en.high()
-    max_freq = config.STEP_SIZE * 500 # 20000
+    max_freq = config.STEP_SIZE * 500
     min_freq = config.STEP_SIZE * 100
     self.max_delay = Stepper.speed_to_delay(max_freq)
     self.min_delay = Stepper.speed_to_delay(min_freq)
@@ -44,7 +25,7 @@ class Stepper:
   def speed_to_delay(freq):
     return int(500000 / freq)
 
-  def move(self, steps, l_dir, l_prd, r_dir, r_prd):
+  def move(self, steps, l_dir, l_rat, r_dir, r_rat):
     a_count = 0
     d_count = 0
     a_starting_delay = -1
@@ -55,6 +36,9 @@ class Stepper:
     self.dir2.value(r_dir)
     steps_to_stop = min(self.steps_to_stop, math.ceil(steps/2))
     print("real_steps_to_stop: ", steps_to_stop)
+
+    l_step = 0
+    r_step = 0
     for i in range(steps):
       steps_left = steps - i
       if steps_to_stop >= steps_left:
@@ -70,8 +54,8 @@ class Stepper:
         a_count+=1
         a_final_delay = delay
 
-      should_step_left = i%l_prd == 0
-      should_step_right = i%r_prd == 0 
+      should_step_left = i == round(l_step * l_rat)
+      should_step_right = i == round(r_step * r_rat)
 
       if should_step_left:
         self.step1.high()
@@ -86,6 +70,11 @@ class Stepper:
         self.step2.low()
 
       time.sleep_us(delay)
+
+      if should_step_left:
+        l_step += 1
+      if should_step_right:
+        r_step += 1
 
     time.sleep_ms(100)
     
