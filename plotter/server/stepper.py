@@ -69,7 +69,9 @@ class Stepper:
                 self.step.high()
                 time.sleep_us(delay)
                 self.step.low()
-                time.sleep_us(math.floor(delay/19))
+                # Now that we asyncio.sleep(0) I'm wondering if this is as necessary except for when this stepper needs
+                # to finish out it's last steps after the other...
+                time.sleep_us(200)
                 step += 1
             i += 1
             await asyncio.sleep(0)
