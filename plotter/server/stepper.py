@@ -86,6 +86,8 @@ class Stepper:
         self.step2.low()
 
       time.sleep_us(delay)
+
+    time.sleep_ms(100)
     
     print("acc_count: ", a_count)
     print("acc_start_delay: ", a_starting_delay)
