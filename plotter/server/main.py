@@ -55,19 +55,24 @@ def get_ratios(left_steps, right_steps):
 async def processCmdQueue(q, leftStepper, rightStepper):
     while True:
         raw_cmd = await q.get()
-        left_steps, left_dir, right_steps, right_dir = decode_cmd(raw_cmd)
+        cmds = raw_cmd.split("|")
+        for cmd in cmds:
+            if cmd == "":
+               continue
+            left_steps, left_dir, right_steps, right_dir = decode_cmd(cmd)
 
-        leftStepper.dir(left_dir)
-        rightStepper.dir(right_dir)
+            leftStepper.dir(left_dir)
+            rightStepper.dir(right_dir)
 
-        left_ratio, right_ratio = get_ratios(left_steps, right_steps)
-        print(f"Ratios: L({left_ratio}), R({right_ratio})")
+            left_ratio, right_ratio = get_ratios(left_steps, right_steps)
+            print(f"Ratios: L({left_ratio}), R({right_ratio})")
 
-        l = asyncio.create_task(leftStepper.move(left_steps, left_ratio))
-        r = asyncio.create_task(rightStepper.move(right_steps, right_ratio))
+            l = asyncio.create_task(leftStepper.move(left_steps, left_ratio))
+            r = asyncio.create_task(rightStepper.move(right_steps, right_ratio))
 
-        await l
-        await r
+            await l
+            await r
+            asyncio.sleep(1)
 
 
 async def main():
