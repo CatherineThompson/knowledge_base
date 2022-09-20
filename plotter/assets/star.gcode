@@ -5,23 +5,20 @@ G01 E0; no extrusion
 G21; millimeters
 G91 G0 F300.0 Z20.000; pen park !!Zsafe
 G90; absolute
-G28 X; home
-G28 Y; home
-G28 Z; home
-G00 F300.0 Z35.000; pen park !!Zpark
+G00 F300.0 Z21.000; pen park !!Zpark
 G00 F2400.0 Y0.000; !!Ybottom
 G00 F2400.0 X0.000; !!Xleft
-G00 F2400.0 X178.196 Y89.671; move !!Xleft+178.196 Ybottom+89.671
-G00 F300.0 Z15.000; pen down !!Zwork
-G01 F2100.0 X113.212 Y111.936; draw !!Xleft+113.212 Ybottom+111.936
-G01 F2100.0 X55.853 Y78.938; draw !!Xleft+55.853 Ybottom+78.938
-G01 F2100.0 X57.678 Y145.559; draw !!Xleft+57.678 Ybottom+145.559
-G01 F2100.0 X7.487 Y188.094; draw !!Xleft+7.487 Ybottom+188.094
-G01 F2100.0 X73.599 Y207.004; draw !!Xleft+73.599 Ybottom+207.004
-G01 F2100.0 X99.938 Y266.290; draw !!Xleft+99.938 Ybottom+266.290
-G01 F2100.0 X138.972 Y211.355; draw !!Xleft+138.972 Ybottom+211.355
-G01 F2100.0 X205.441 Y205.461; draw !!Xleft+205.441 Ybottom+205.461
-G01 F2100.0 X163.455 Y152.600; draw !!Xleft+163.455 Ybottom+152.600
-G01 F2100.0 X178.196 Y89.671; draw !!Xleft+178.196 Ybottom+89.671
-G01 F2100.0 X177.250 Y89.995; draw !!Xleft+177.250 Ybottom+89.995
-G00 F300.0 Z35.000; pen park !!Zpark
+G00 F2400.0 X59.361 Y42.279; move !!Xleft+59.361 Ybottom+42.279
+G00 F300.0 Z1.000; pen down !!Zwork
+G01 F2100.0 X51.221 Y44.216; draw !!Xleft+51.221 Ybottom+44.216
+G01 F2100.0 X44.458 Y39.470; draw !!Xleft+44.458 Ybottom+39.470
+G01 F2100.0 X43.869 Y47.473; draw !!Xleft+43.869 Ybottom+47.473
+G01 F2100.0 X37.060 Y52.158; draw !!Xleft+37.060 Ybottom+52.158
+G01 F2100.0 X44.836 Y55.167; draw !!Xleft+44.836 Ybottom+55.167
+G01 F2100.0 X47.390 Y62.808; draw !!Xleft+47.390 Ybottom+62.808
+G01 F2100.0 X52.785 Y56.665; draw !!Xleft+52.785 Ybottom+56.665
+G01 F2100.0 X61.173 Y56.702; draw !!Xleft+61.173 Ybottom+56.702
+G01 F2100.0 X56.731 Y49.897; draw !!Xleft+56.731 Ybottom+49.897
+G01 F2100.0 X59.361 Y42.279; draw !!Xleft+59.361 Ybottom+42.279
+G01 F2100.0 X58.388 Y42.511; draw !!Xleft+58.388 Ybottom+42.511
+G00 F300.0 Z21.000; pen park !!Zpark

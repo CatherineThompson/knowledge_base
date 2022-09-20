@@ -1,6 +1,7 @@
 import config
 import math
 import calc
+from pygcode import Line
 
 class Plotter:
   def __init__(self, send):
@@ -40,9 +41,22 @@ class Plotter:
     self.y = y
 
   def rectTest(self):
-    self.move(25, 25)
-    self.move(75, 25)
-    self.move(75, 75)
-    self.move(25, 75)
-    self.move(25, 25)
-    self.move(50, 50)
+    self.move(40, 40)
+    self.move(60, 40)
+    self.move(60, 60)
+    self.move(40, 60)
+    self.move(40, 40)
+    self.move(60, 60)
+
+  def starTest(self):
+    with open('../assets/star_100_by_100_small.gcode', 'r') as fh:
+      for line_text in fh.readlines():
+          line = Line(line_text)
+
+          if line.block.words[0] == "G01":
+            if len(line.block.words) > 2:
+              x = line.block.words[2].value
+              y = line.block.words[3].value
+              print(line.block.words)
+              print(x, y)
+              self.move(x, y)

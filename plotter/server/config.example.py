@@ -10,8 +10,5 @@ LEFT_ENABLE_PIN = 19
 LEFT_STEP_PIN = 20
 LEFT_DIR_PIN = 21
 
-# in Hz - cycles/steps per second
-MAX_FREQ = 500
-
 # 1 | 2 | 4 | 8 | 16
 STEP_SIZE = 16

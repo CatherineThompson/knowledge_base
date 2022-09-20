@@ -10,7 +10,7 @@ def main():
       s.send(msg.encode())
 
     p = plotter.Plotter(send)
-    p.rectTest()
+    p.starTest()
 
   print('done')
 
