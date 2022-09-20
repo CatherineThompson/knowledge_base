@@ -49,7 +49,7 @@ class Plotter:
     self.move(60, 60)
 
   def starTest(self):
-    with open('../assets/star_100_by_100_small.gcode', 'r') as fh:
+    with open('../assets/star.gcode', 'r') as fh:
       for line_text in fh.readlines():
           line = Line(line_text)
 

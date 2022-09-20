@@ -6,7 +6,7 @@ from pygcode import Line
 
 class TestParseGcode(unittest.TestCase):
     def test_upper(self):
-      with open('../assets/star_100_by_100.gcode', 'r') as fh:
+      with open('../assets/star.gcode', 'r') as fh:
         for line_text in fh.readlines():
             line = Line(line_text)
 
