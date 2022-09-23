@@ -40,16 +40,30 @@ class Plotter:
     self.x = x
     self.y = y
 
-  def rectTest(self):
-    self.move(40, 40)
-    self.move(60, 40)
-    self.move(60, 60)
-    self.move(40, 60)
-    self.move(40, 40)
-    self.move(60, 60)
+  def rectTest(self, size):
+    s = size / 2
+    self.move(50 - s, 50 - s)
+    self.move(50 + s, 50 - s)
+    self.move(50 + s, 50 + s)
+    self.move(50 - s, 50 + s)
+    self.move(50 - s, 50 - s)
+    self.move(50, 50)
 
   def starTest(self):
     with open('../assets/star.gcode', 'r') as fh:
+      for line_text in fh.readlines():
+          line = Line(line_text)
+
+          if line.block.words[0] == "G01":
+            if len(line.block.words) > 2:
+              x = line.block.words[2].value
+              y = line.block.words[3].value
+              print(line.block.words)
+              print(x, y)
+              self.move(x, y)
+
+  def print(self, file):
+    with open(file, 'r') as fh:
       for line_text in fh.readlines():
           line = Line(line_text)
 

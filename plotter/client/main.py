@@ -10,7 +10,8 @@ def main():
       s.send(msg.encode())
 
     p = plotter.Plotter(send)
-    p.starTest()
+    # p.print('../assets/databear.gcode')
+    p.rectTest(50)
 
   print('done')
 

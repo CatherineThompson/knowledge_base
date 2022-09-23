@@ -9,12 +9,12 @@ class Stepper:
     self.step2 = Pin(config.RIGHT_STEP_PIN, Pin.OUT)
     self.dir1 = Pin(config.LEFT_DIR_PIN, Pin.OUT)
     self.dir2 = Pin(config.RIGHT_DIR_PIN, Pin.OUT)
-    max_freq = config.STEP_SIZE * 400
-    min_freq = config.STEP_SIZE * 80
+    max_freq = config.STEP_SIZE * 2000
+    min_freq = config.STEP_SIZE * 100
     self.max_delay = Stepper.speed_to_delay(max_freq)
     self.min_delay = Stepper.speed_to_delay(min_freq)
     # change in ramp up/ramp down delay per step
-    self.delay_acc = 0.1
+    self.delay_acc = 0.25
     self.steps_to_stop = int((self.min_delay - self.max_delay) / self.delay_acc)
 
     print("max_delay: ", self.max_delay)
