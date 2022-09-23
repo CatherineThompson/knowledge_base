@@ -29,8 +29,8 @@ class Plotter:
     print(left_steps, right_steps)
 
     steps = left_steps if left_steps > right_steps else right_steps
-    left_rat = round(steps / left_steps, 6) * left_dir
-    right_rat = round(steps / right_steps, 6) * right_dir
+    left_rat = 0 if left_steps == 0 else round(steps / left_steps, 6) * left_dir
+    right_rat = 0 if right_steps == 0 else round(steps / right_steps, 6) * right_dir
 
     msg = f'{steps},{left_rat},{right_rat}\n'
     print(msg)

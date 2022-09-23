@@ -37,8 +37,8 @@ class Stepper:
     steps_to_stop = min(self.steps_to_stop, math.ceil(steps/2))
     print("real_steps_to_stop: ", steps_to_stop)
 
-    l_step = 0
-    r_step = 0
+    l_step = -1 if l_rat == 0 else 0
+    r_step = -1 if r_rat == 0 else 0
     for i in range(steps):
       steps_left = steps - i
       if steps_to_stop >= steps_left:
